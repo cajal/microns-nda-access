@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  notebook:
+    image: microns-phase3-nda-notebook:latest
+    build:
+      context: .
+    env_file: .env
+    volumes:
+      - ${EXTERNAL_NOTEBOOKS}:/notebooks/workspace
+    # # Ports not compatible with network_mode: 'host',
+    # # If changing the port is necessary you must comment out the network_mode line and uncomment the ports section.
+    # # Then you can set the env NOTEBOOK_PORT=<some-port-number>
+    # # Note: Without network_mode: 'host' you will be unable to access the database with env DJ_HOST=127.0.1.1 and instead
+    # #       would need to use the network ip of the database hosting computer.
+    # ports:
+    #   - "${NOTEBOOK_PORT:-8888}:8888" # Jupyter notebook, defaults to port 8888 unless overridden by the NOTEBOOK_PORT env variable
+    network_mode: 'host'
+    
+  database:
+    image: microns-phase3-nda-db-v3:latest # This image should be first loaded from the downloaded tar file, reference SETUP.md for more information.
+    command: --default-authentication-plugin=mysql_native_password --max-allowed-packet=2147483648
+    restart: always
+    network_mode: 'host'
