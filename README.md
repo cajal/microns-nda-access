@@ -2,6 +2,8 @@
 
 This guide will walk you through setting up the database container and the access methods for the [microns_phase3_nda](https://github.com/cajal/microns_phase3_nda) data.
 
+The data and files for these can be found in the microns-explorer [here](https://www.microns-explorer.org/cortical-mm3#f-data).
+
 # Prerequisites
 
 - ~115 GB of free disk space (around double that, ~220 GB, to load the image from the tar archive the first time)
@@ -16,7 +18,7 @@ If you know what you're doing and wish to handle importing the SQL file into an 
 
 # Database
 
-The docker image must first be downloaded from this link (in a tar archive format): [mysql-nda-database](LINK_GOES_HERE).
+The docker image must first be downloaded from the microns-explorer (in a tar archive format, link is at the top).
 Save this to an accessible location.
 
 In the location where you've stored the downloaded image archive you then will load the image to your local filesystem:
@@ -54,16 +56,16 @@ docker run --network="host" --detach microns-phase3-nda-db-v3:latest
 
 The data can be accessed in two ways, either with the mysql-client or through DataJoint in a Jupyter notebook service.
 
-The default user and password for the image are:
+The default user and password for the database are:
 
 `username:` root  
 `password:` microns123
 
 ## Jupyter Notebook (DataJoint)
 
-The pre-built image can be downloaded at this link: [microns-phase3-nda-notebook](LINK_GOES_HERE)
+[//]: # (The pre-built image (microns-phase3-nda-notebook\) can be downloaded from the microns-explorer linked above.)
 
-You can also clone the repository and build it yourself with `Docker` and `docker-compose`.
+You can clone the access repository and build it yourself with `Docker` and `docker-compose`.
 Clone the repository at https://github.com/cajal/microns_phase3_nda.
 
 A `.env` (dotenv) file must be created in the same folder as `docker-compose.yml`, however it can be empty.
