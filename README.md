@@ -24,13 +24,13 @@ Save this to an accessible location.
 In the location where you've stored the downloaded image archive you then will load the image to your local filesystem:
 
 ```bash
-docker load < functiona-data-database-container-image-v3.tar
+docker load < functiona_data_database_container_image_v3.tar
 ```
 
 OR
 
 ```bash
-docker load --input functiona-data-database-container-image-v3.tar
+docker load --input functiona_data_database_container_image_v3.tar
 ```
 
 To start the database you can either `Docker` or `docker-compose`:
