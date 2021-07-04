@@ -123,4 +123,4 @@ If so, you only need to run the notebook portion of the docker-compose file, but
 
 replacing the "\<hostname>" with the hostname of the machine hosting the database (can use `127.0.1.1` if the notebook service has `network_mode: 'host'` enabled, but otherwise must use the network ip of the computer hosting the database container).
 
-You can also replace the ./notebooks reference to a folder to a folder the of your choice.
+You can also replace the ./notebooks reference to a folder of your choice.
