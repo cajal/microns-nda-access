@@ -22,6 +22,8 @@ COPY README.md /microns-nda-access/.
 COPY Dockerfile /microns-nda-access/.
 COPY docker-compose.yml /microns-nda-access/.
 RUN git clone https://github.com/cajal/microns_phase3_nda
+RUN pip3 install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+#RUN pip3 install torch==1.8.1
 RUN pip3 install -e microns_phase3_nda/ --use-feature=in-tree-build
 RUN pip3 install git+https://github.com/AllenInstitute/em_coregistration.git@phase3
 
