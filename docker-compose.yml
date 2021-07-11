@@ -18,7 +18,7 @@ services:
     network_mode: 'host'
     
   database:
-    image: microns-phase3-nda-db-v3:latest # This image should be first loaded from the downloaded tar file, reference SETUP.md for more information.
+    image: microns-phase3-nda-database:latest # This image should be first loaded from the downloaded tar file, reference SETUP.md for more information.
     command: --default-authentication-plugin=mysql_native_password --max-allowed-packet=2147483648
     restart: always
     network_mode: 'host'

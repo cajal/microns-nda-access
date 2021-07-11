@@ -24,13 +24,13 @@ Save this to an accessible location.
 In the location where you've stored the downloaded image archive you then will load the image to your local filesystem:
 
 ```bash
-docker load < functiona_data_database_container_image_v3.tar
+docker load < functiona_data_database_container_image_v4.tar
 ```
 
 OR
 
 ```bash
-docker load --input functiona_data_database_container_image_v3.tar
+docker load --input functiona_data_database_container_image_v4.tar
 ```
 
 To start the database you can either `Docker` or `docker-compose`:
@@ -49,7 +49,7 @@ docker-compose up -d database
 Running the container without docker-compose is also an option.
 
 ```bash
-docker run --network="host" --detach microns-phase3-nda-db-v3:latest
+docker run --network="host" --detach microns-phase3-nda-database:latest
 ```
 
 # Access
