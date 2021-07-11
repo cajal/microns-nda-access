@@ -116,16 +116,11 @@ The external hostname of the machine can be used in place of `127.0.1.1`.
 
 ## .env file
 
-It can be useful to place the environment variables already noted above into a `.env` (dotenv) file in the same folder as the docker-compose.yml file which will automatically read in the use the key=value pairs as environment variables.
+This docker-compose file is optimized to get a single machine up and running quickly with the database and notebook server.
+However, you  might want to run a server and let many other clients connect to it, rather than having all the clients run their own database.
 
-An helpful example for this situation is as follows:
-```env
-DJ_HOST=<hostname>
-DJ_USER=root
-DJ_PASS=microns123
-EXTERNAL_NOTEBOOKS=/path/to/external_folder
-```
+If so, you only need to run the notebook portion of the docker-compose file, but then you must modify the existing .env file to point to the host of an working database.  To do so you need to modify the DJ_HOST variable of the .env file provided.
 
 replacing the "\<hostname>" with the hostname of the machine hosting the database (can use `127.0.1.1` if the notebook service has `network_mode: 'host'` enabled, but otherwise must use the network ip of the computer hosting the database container).
 
-Also replacing the "/path/to/external_folder" to a real folder location.
+You can also replace the ./notebooks reference to a folder of your choice.
