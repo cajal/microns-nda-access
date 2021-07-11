@@ -6,7 +6,7 @@ The data and files for these can be found in the microns-explorer [here](https:/
 
 # Prerequisites
 
-- ~115 GB of free disk space (around double that, ~220 GB, to load the image from the tar archive the first time)
+- ~117 GB of free disk space (around double that, ~222 GB, to load the image from the tar archive the first time)
 - [Docker](https://docs.docker.com/desktop/)
 - [docker-compose](https://docs.docker.com/compose/)
 
@@ -63,39 +63,38 @@ The default user and password for the database are:
 
 ## Jupyter Notebook (DataJoint)
 
-[//]: # (The pre-built image (microns-phase3-nda-notebook\) can be downloaded from the microns-explorer linked above.)
+[//]: # (The pre-built image, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above.)
 
 You can clone the access repository and build it yourself with `Docker` and `docker-compose`.
 Clone the repository at https://github.com/cajal/microns_phase3_nda.
-
-A `.env` (dotenv) file must be created in the same folder as `docker-compose.yml`, however it can be empty.
-
-This can easily be done on linux with:
-
-```bash
-touch .env
-```
-
-but you can create the file however you wish.
 
 Using the docker-compose you can start the service with:
 
 ```bash
 docker-compose up -d notebook
 ```
-which can then be accessed at http://localhost:8888/tree (or at a custom port set with env variable NOTEBOOK_PORT or set in an .env file in the same location as the docker-compose.yml).
+which can then be accessed at http://localhost:8888/tree (this uses the default port of 8888).
 
-http://localhost:8888 will send to Jupyter Lab, but not all plots/graphics will work out of the box without enabling jupyter lab extensions.
+http://localhost:8888 will send to Jupyter Lab, but the plots/graphics might not all work out-of-the-box without enabling jupyter lab extensions.
 
-The database host will default to http://localhost:3306, but that points inside the container, in order to point to the outside mysql database you should either set an env variable of the name DJ_HOST (or in the .env file) or use the below Python snippet to set the host before loading the schema.
+The database host will default to http://localhost:3306, or from the notebook container it can be accessed via the `database` link.
 
 An external, persistent workspace can be mounted to the internal `workspace` folder by settings the `EXTERNAL_NOTEBOOKS` env variable to a folder of choice.
+
+By **default**  the notebooks will connect with the database using the environment variable defaults set in `.env`, so you should be able to access the data and python modules like below with the basic setup in these instructions:
 
 ```python
 import datajoint as dj
 
-# This will be 127.0.1.1 if the container is on the same machine as the database, or just the hostname of the machine the database lives on.
-dj.config['database.host'] = 'database-host-ip-goes-here'
+from phase3 import nda, func, utils
+```
+
+However, if it was necessary to manually set the connection credentials and/or host in a notebook, below is an example of that:
+
+```python
+import datajoint as dj
+
+dj.config['database.host'] = 'database'
 dj.config['database.user'] = 'root'
 df.config['database.password'] = 'microns123'
 
@@ -107,12 +106,16 @@ from phase3 import nda, func, utils
 From the local machine you can access it this way
 
 ```bash
-mysql -h 127.0.1.1 -u root -p
+mysql -h 127.0.0.1 -u root -p
 ```
 
 which will then prompt for the password (the default from above is `microns123`) and will open an interactive mysql terminal.
 
-The external hostname of the machine can be used in place of `127.0.1.1`.
+You can usually omit the host (as it will default to `localhost`, which is equivalent to `127.0.0.1` for these purposes).
+
+```bash
+mysql -u root -p
+```
 
 ## .env file
 
