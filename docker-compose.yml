@@ -15,10 +15,16 @@ services:
     # #       would need to use the network ip of the database hosting computer.
     # ports:
     #   - "${NOTEBOOK_PORT:-8888}:8888" # Jupyter notebook, defaults to port 8888 unless overridden by the NOTEBOOK_PORT env variable
-    network_mode: 'host'
+    # network_mode: 'host'
+    links:
+      - database
+    ports: 
+      - 8888:8888
     
   database:
     image: microns-phase3-nda-database:latest # This image should be first loaded from the downloaded tar file, reference SETUP.md for more information.
     command: --default-authentication-plugin=mysql_native_password --max-allowed-packet=2147483648
     restart: always
-    network_mode: 'host'
+    ports:
+      - 3306:3306
+#    network_mode: 'host'
