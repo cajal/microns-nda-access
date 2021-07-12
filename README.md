@@ -24,13 +24,13 @@ Save this to an accessible location.
 In the location where you've stored the downloaded image archive you then will load the image to your local filesystem:
 
 ```bash
-docker load < functiona_data_database_container_image_v4.tar
+docker load < functional_data_database_container_image_v4.tar
 ```
 
 OR
 
 ```bash
-docker load --input functiona_data_database_container_image_v4.tar
+docker load --input functional_data_database_container_image_v4.tar
 ```
 
 To start the database you can either `Docker` or `docker-compose`:
@@ -63,7 +63,7 @@ The default user and password for the database are:
 
 ## Jupyter Notebook (DataJoint)
 
-[//]: # (The pre-built image, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above.)
+The pre-built image of the access container, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above and loaded as a docker image the same way as the database archive above.
 
 You can clone the access repository and build it yourself with `Docker` and `docker-compose`.
 Clone the repository at https://github.com/cajal/microns_phase3_nda.
@@ -89,7 +89,7 @@ import datajoint as dj
 from phase3 import nda, func, utils
 ```
 
-However, if it was necessary to manually set the connection credentials and/or host in a notebook, below is an example of that:
+However, if it's wanted to manually set the connection credentials and/or host in a notebook, below is an example of that:
 
 ```python
 import datajoint as dj
@@ -111,12 +111,6 @@ mysql -h 127.0.0.1 -u root -p
 
 which will then prompt for the password (the default from above is `microns123`) and will open an interactive mysql terminal.
 
-You can usually omit the host (as it will default to `localhost`, which is equivalent to `127.0.0.1` for these purposes).
-
-```bash
-mysql -u root -p
-```
-
 ## .env file
 
 This docker-compose file is optimized to get a single machine up and running quickly with the database and notebook server.
@@ -127,3 +121,7 @@ If so, you only need to run the notebook portion of the docker-compose file, but
 replacing the "\<hostname>" with the hostname of the machine hosting the database (can use `127.0.1.1` if the notebook service has `network_mode: 'host'` enabled, but otherwise must use the network ip of the computer hosting the database container).
 
 You can also replace the ./notebooks reference to a folder of your choice.
+
+## Known Issues
+
+- For Windows and Mac (where you have to allocate memory ahead of time) you might need to allocate 8-12 GB to Docker to ensure you aren't running into the upper limits of the default allocated memory usage. Otherwise you might run into a "Lost Connection to MYSQL database" exception, which can be temporarily fixed by restarting the notebook kernel.
