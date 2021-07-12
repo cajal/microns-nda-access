@@ -63,9 +63,7 @@ The default user and password for the database are:
 
 ## Jupyter Notebook (DataJoint)
 
-The pre-built image of the access container, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above and loaded as a docker image the same way as the database archive above.
-
-You can clone the access repository and build it yourself with `Docker` and `docker-compose`.
+You can clone this access repository and build it yourself with `Docker` and `docker-compose`.
 Clone the repository at https://github.com/cajal/microns_phase3_nda.
 
 Using the docker-compose you can start the service with:
@@ -101,6 +99,12 @@ df.config['database.password'] = 'microns123'
 from phase3 import nda, func, utils
 ```
 
+The pre-built image of the access container, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above and loaded as a docker image the same way as the database archive above instead of building it yourself.
+
+```bash
+docker load --input functional_data_notebook_container_image_v4.tar
+```
+
 ## mysql-client
 
 From the local machine you can access it this way
@@ -124,4 +128,4 @@ You can also replace the ./notebooks reference to a folder of your choice.
 
 ## Known Issues
 
-- For Windows and Mac (where you have to allocate memory ahead of time) you might need to allocate 8-12 GB to Docker to ensure you aren't running into the upper limits of the default allocated memory usage. Otherwise you might run into a "Lost Connection to MYSQL database" exception, which can be temporarily fixed by restarting the notebook kernel.
+- For Windows and Mac (where you have to allocate memory ahead of time for Docker) you might need to allocate 8-12 GB to Docker to ensure you aren't running into the upper limits of the default allocated memory limits. Otherwise you might run into a "Lost Connection to MYSQL database" exception, which can be temporarily fixed by restarting the notebook kernel.
