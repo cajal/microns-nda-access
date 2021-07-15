@@ -4,6 +4,14 @@ This guide will walk you through setting up the database container and the acces
 
 The data and files for these can be found in the microns-explorer [here](https://www.microns-explorer.org/cortical-mm3#f-data).
 
+or
+
+you can download the container image tar file using the [aws cli tool](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+
+```bash
+aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v4/functional_data_database_container_image_v4.tar . --no-sign-request
+```
+
 # Prerequisites
 
 - ~117 GB of free disk space (around double that, ~222 GB, to load the image from the tar archive the first time)
