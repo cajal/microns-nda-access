@@ -6,7 +6,7 @@ The data and files for these can be found in the microns-explorer [here](https:/
 
 # Prerequisites
 
-- ~115 GB of free disk space (around double that, ~220 GB, to load the image from the tar archive the first time)
+- ~117 GB of free disk space (around double that, ~222 GB, to load the image from the tar archive the first time)
 - [Docker](https://docs.docker.com/desktop/)
 - [docker-compose](https://docs.docker.com/compose/)
 
@@ -24,13 +24,13 @@ Save this to an accessible location.
 In the location where you've stored the downloaded image archive you then will load the image to your local filesystem:
 
 ```bash
-docker load < functiona_data_database_container_image_v3.tar
+docker load < functional_data_database_container_image_v4.tar
 ```
 
 OR
 
 ```bash
-docker load --input functiona_data_database_container_image_v3.tar
+docker load --input functional_data_database_container_image_v4.tar
 ```
 
 To start the database you can either `Docker` or `docker-compose`:
@@ -49,7 +49,7 @@ docker-compose up -d database
 Running the container without docker-compose is also an option.
 
 ```bash
-docker run --network="host" --detach microns-phase3-nda-db-v3:latest
+docker run --network="host" --detach microns-phase3-nda-database:latest
 ```
 
 # Access
@@ -63,43 +63,46 @@ The default user and password for the database are:
 
 ## Jupyter Notebook (DataJoint)
 
-[//]: # (The pre-built image (microns-phase3-nda-notebook\) can be downloaded from the microns-explorer linked above.)
-
-You can clone the access repository and build it yourself with `Docker` and `docker-compose`.
+You can clone this access repository and build it yourself with `Docker` and `docker-compose`.
 Clone the repository at https://github.com/cajal/microns_phase3_nda.
-
-A `.env` (dotenv) file must be created in the same folder as `docker-compose.yml`, however it can be empty.
-
-This can easily be done on linux with:
-
-```bash
-touch .env
-```
-
-but you can create the file however you wish.
 
 Using the docker-compose you can start the service with:
 
 ```bash
 docker-compose up -d notebook
 ```
-which can then be accessed at http://localhost:8888/tree (or at a custom port set with env variable NOTEBOOK_PORT or set in an .env file in the same location as the docker-compose.yml).
+which can then be accessed at http://localhost:8888/tree (this uses the default port of 8888).
 
-http://localhost:8888 will send to Jupyter Lab, but not all plots/graphics will work out of the box without enabling jupyter lab extensions.
+http://localhost:8888 will send to Jupyter Lab, but the plots/graphics might not all work out-of-the-box without enabling jupyter lab extensions.
 
-The database host will default to http://localhost:3306, but that points inside the container, in order to point to the outside mysql database you should either set an env variable of the name DJ_HOST (or in the .env file) or use the below Python snippet to set the host before loading the schema.
+The database host will default to http://localhost:3306, or from the notebook container it can be accessed via the `database` link.
 
 An external, persistent workspace can be mounted to the internal `workspace` folder by settings the `EXTERNAL_NOTEBOOKS` env variable to a folder of choice.
+
+By **default**  the notebooks will connect with the database using the environment variable defaults set in `.env`, so you should be able to access the data and python modules like below with the basic setup in these instructions:
 
 ```python
 import datajoint as dj
 
-# This will be 127.0.1.1 if the container is on the same machine as the database, or just the hostname of the machine the database lives on.
-dj.config['database.host'] = 'database-host-ip-goes-here'
+from phase3 import nda, func, utils
+```
+
+However, if it's wanted to manually set the connection credentials and/or host in a notebook, below is an example of that:
+
+```python
+import datajoint as dj
+
+dj.config['database.host'] = 'database'
 dj.config['database.user'] = 'root'
 df.config['database.password'] = 'microns123'
 
 from phase3 import nda, func, utils
+```
+
+The pre-built image of the access container, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above and loaded as a docker image the same way as the database archive above instead of building it yourself.
+
+```bash
+docker load --input functional_data_notebook_container_image_v4.tar
 ```
 
 ## mysql-client
@@ -107,12 +110,10 @@ from phase3 import nda, func, utils
 From the local machine you can access it this way
 
 ```bash
-mysql -h 127.0.1.1 -u root -p
+mysql -h 127.0.0.1 -u root -p
 ```
 
 which will then prompt for the password (the default from above is `microns123`) and will open an interactive mysql terminal.
-
-The external hostname of the machine can be used in place of `127.0.1.1`.
 
 ## .env file
 
@@ -124,3 +125,7 @@ If so, you only need to run the notebook portion of the docker-compose file, but
 replacing the "\<hostname>" with the hostname of the machine hosting the database (can use `127.0.1.1` if the notebook service has `network_mode: 'host'` enabled, but otherwise must use the network ip of the computer hosting the database container).
 
 You can also replace the ./notebooks reference to a folder of your choice.
+
+## Known Issues
+
+- For Windows and Mac (where you have to allocate memory ahead of time for Docker) you might need to allocate 8-12 GB to Docker to ensure you aren't running into the upper limits of the default allocated memory limits. Otherwise you might run into a "Lost Connection to MYSQL database" exception, which can be temporarily fixed by restarting the notebook kernel.

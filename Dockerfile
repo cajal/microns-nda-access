@@ -3,7 +3,7 @@ FROM python:3.8-buster
 # Base packages
 
 RUN apt-get update&& \
-    apt-get -y install graphviz build-essential python-dev fish
+    apt-get -y install graphviz build-essential python-dev ffmpeg fish
     
 RUN pip install --upgrade pip
 
@@ -11,7 +11,7 @@ RUN pip install --upgrade pip
 RUN pip3 install jupyter jupyterlab
 
 # Install viz dependencies
-RUN pip3 install matplotlib ipyvolume
+RUN pip3 install matplotlib ipyvolume seaborn
 
 # Lock to datajoint 0.12.9
 RUN pip3 install datajoint==0.12.9
