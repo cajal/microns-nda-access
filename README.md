@@ -134,6 +134,8 @@ replacing the "\<hostname>" with the hostname of the machine hosting the databas
 
 You can also replace the ./notebooks reference to a folder of your choice.
 
+The links section of the notebook service in docker-compose.yml will also need to be commented out or it'll expect the database container image to be present.
+
 ## Known Issues
 
 - For Windows and Mac (where you have to allocate memory ahead of time for Docker) you might need to allocate 8-12 GB to Docker to ensure you aren't running into the upper limits of the default allocated memory limits. Otherwise you might run into a "Lost Connection to MYSQL database" exception, which can be temporarily fixed by restarting the notebook kernel.
