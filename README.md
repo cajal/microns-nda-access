@@ -14,7 +14,7 @@ aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_
 
 # Prerequisites
 
-- ~117 GB of free disk space (around double that, ~222 GB, to load the image from the tar archive the first time)
+- More than 120 GB of free disk space (around double that, ~222 GB, to load the image from the tar archive the first time, and potentially up to that amount to query from the database)
 - [Docker](https://docs.docker.com/desktop/)
 - [docker-compose](https://docs.docker.com/compose/)
 
