@@ -9,12 +9,12 @@ or
 you can download the container image tar file using the [aws cli tool](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
 ```bash
-aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v4/functional_data_database_container_image_v4.tar . --no-sign-request
+aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v5/functional_data_database_container_image_v5.tar . --no-sign-request
 ```
 
 # Prerequisites
 
-- ~117 GB of free disk space (around double that, ~222 GB, to load the image from the tar archive the first time)
+- More than 120 GB of free disk space (around double that, ~222 GB, to load the image from the tar archive the first time, and potentially up to that amount to query from the database)
 - [Docker](https://docs.docker.com/desktop/)
 - [docker-compose](https://docs.docker.com/compose/)
 
@@ -32,13 +32,13 @@ Save this to an accessible location.
 In the location where you've stored the downloaded image archive you then will load the image to your local filesystem:
 
 ```bash
-docker load < functional_data_database_container_image_v4.tar
+docker load < functional_data_database_container_image_v5.tar
 ```
 
 OR
 
 ```bash
-docker load --input functional_data_database_container_image_v4.tar
+docker load --input functional_data_database_container_image_v5.tar
 ```
 
 To start the database you can either `Docker` or `docker-compose`:
@@ -110,7 +110,7 @@ from phase3 import nda, func, utils
 The pre-built image of the access container, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above and loaded as a docker image the same way as the database archive above instead of building it yourself.
 
 ```bash
-docker load --input functional_data_notebook_container_image_v4.tar
+docker load --input functional_data_notebook_container_image_v5.tar
 ```
 
 ## mysql-client
@@ -133,6 +133,8 @@ If so, you only need to run the notebook portion of the docker-compose file, but
 replacing the "\<hostname>" with the hostname of the machine hosting the database (can use `127.0.1.1` if the notebook service has `network_mode: 'host'` enabled, but otherwise must use the network ip of the computer hosting the database container).
 
 You can also replace the ./notebooks reference to a folder of your choice.
+
+The links section of the notebook service in docker-compose.yml will also need to be commented out or it'll expect the database container image to be present.
 
 ## Known Issues
 

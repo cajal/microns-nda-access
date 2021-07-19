@@ -29,6 +29,7 @@ RUN pip3 install git+https://github.com/AllenInstitute/em_coregistration.git@pha
 
 # Set up work environment
 WORKDIR /notebooks
+COPY README.md .
 RUN mkdir tutorials/ && cp -r /src/microns_phase3_nda/notebooks/. tutorials/.
 RUN mkdir workspace/
 
