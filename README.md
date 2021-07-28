@@ -22,7 +22,7 @@ aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_
 
 This section comes in two parts, the first is the database containing the `microns-phase3-nda` schema and the second is for the container to access that data with DataJoint in a Jupyter notebook server that will come with tutorials or with the mysql-client.
 
-If you know what you're doing and wish to handle importing the SQL file into an existing database yourself you can skip this next `Database` section and go straight to the `Access` section.
+If you wish to handle importing the SQL file into an existing database yourself you can skip this next `Database` section, and view the basic instructions for ingesting the database into an existing MySQL instance. Then go back to the `Access` section.
 
 # Database
 
@@ -135,6 +135,22 @@ replacing the "\<hostname>" with the hostname of the machine hosting the databas
 You can also replace the ./notebooks reference to a folder of your choice.
 
 The links section of the notebook service in docker-compose.yml will also need to be commented out or it'll expect the database container image to be present.
+
+## Manual SQL Ingesting
+
+If you want to ingest/import the SQL file into an existing MySQL instance you must first directly download the SQL dump file, this can be done with:
+
+```bash
+aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v5/functional_data_database_sql_dump_v5.sql . --no-sign-request
+```
+
+Then to ingest it into your existing database, you first must create an empty schema by the name of `microns_phase3_nda`, then run this command (the `--compress` flag is optional):
+
+```bash
+mysql --compress --max_allowed_packet=2147483648 -h<your-custom-database-ip> -u<your-username> -p microns_phase3_nda < functional_data_database_sql_dump_v5.sql
+```
+
+This should take several hours.
 
 ## Known Issues
 
