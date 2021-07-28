@@ -1,0 +1,41 @@
+# container for installation into other jupyter hub servers
+FROM jupyter/minimal-notebook:hub-1.4.1
+
+# Base packages
+
+USER root
+
+RUN apt-get update&& \
+    apt-get -y install graphviz build-essential python-dev ffmpeg fish
+    
+RUN pip install --upgrade pip
+
+# Install jupyter notebook
+# RUN pip3 install jupyter jupyterlab
+
+# Install viz dependencies
+RUN pip3 install matplotlib ipyvolume seaborn
+
+# Lock to datajoint 0.12.9
+RUN pip3 install datajoint==0.12.9
+
+
+# Install the outside packages
+WORKDIR /src
+COPY README.md /microns-nda-access/.
+COPY Dockerfile /microns-nda-access/.
+COPY docker-compose.yml /microns-nda-access/.
+RUN git clone https://github.com/cajal/microns_phase3_nda
+RUN pip3 install torch==1.9.0+cpu torchvision==0.10.0+cpu torchaudio==0.9.0 -f https://download.pytorch.org/whl/torch_stable.html
+#RUN pip3 install torch==1.8.1
+RUN pip3 install -e microns_phase3_nda/ --use-feature=in-tree-build
+RUN pip3 install git+https://github.com/AllenInstitute/em_coregistration.git@phase3
+
+USER jovyan
+
+# Set up work environment
+WORKDIR /notebooks
+COPY README.md .
+RUN mkdir tutorials/ && cp -r /src/microns_phase3_nda/notebooks/. tutorials/.
+RUN mkdir workspace/
+

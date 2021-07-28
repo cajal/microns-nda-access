@@ -28,3 +28,10 @@ services:
     ports:
       - 3306:3306
 #    network_mode: 'host'
+
+  hub_container:
+    image: microns-phase3-nda-container:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.hub-container
+    env_file: .env
