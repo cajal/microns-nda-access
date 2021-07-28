@@ -22,7 +22,7 @@ aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_
 
 This section comes in two parts, the first is the database containing the `microns-phase3-nda` schema and the second is for the container to access that data with DataJoint in a Jupyter notebook server that will come with tutorials or with the mysql-client.
 
-If you wish to handle importing the SQL file into an existing database yourself you can skip this next `Database` section, and view the basic instructions for ingesting the database into an existing MySQL instance. Then go back to the `Access` section.
+If you wish to handle importing the SQL file into an existing database yourself you can skip this next `Database` section, and view the basic instructions for ingesting the database into an existing MySQL instance in the `Manual SQL Ingesting` section below. Then go back to the `Access` section.
 
 # Database
 
