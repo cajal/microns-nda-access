@@ -144,10 +144,10 @@ If you want to ingest/import the SQL file into an existing MySQL instance you mu
 aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v5/functional_data_database_sql_dump_v5.sql . --no-sign-request
 ```
 
-Then to ingest it into your existing database, you first must create an empty schema by the name of `microns_phase3_nda`, then run this command (the `--compress` flag is optional):
+Then to ingest it into your existing database, you first must create an empty schema by the name of `microns_phase3_nda`, then run this command (the `--compress` flag is optional) after replacing `[your-custom-databse-ip]` and `[your-username]` with your own info:
 
 ```bash
-mysql --compress --max_allowed_packet=2147483648 -h<your-custom-database-ip> -u<your-username> -p microns_phase3_nda < functional_data_database_sql_dump_v5.sql
+mysql --compress --max_allowed_packet=2147483648 -h[your-custom-database-ip] -u[your-username] -p microns_phase3_nda < functional_data_database_sql_dump_v5.sql
 ```
 
 This should take several hours.
