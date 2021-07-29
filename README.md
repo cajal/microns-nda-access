@@ -9,7 +9,7 @@ or
 you can download the container image tar file using the [aws cli tool](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 
 ```bash
-aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v5/functional_data_database_container_image_v5.tar . --no-sign-request
+aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v6/functional_data_database_container_image_v6.tar . --no-sign-request
 ```
 
 # Prerequisites
@@ -32,13 +32,13 @@ Save this to an accessible location.
 In the location where you've stored the downloaded image archive you then will load the image to your local filesystem:
 
 ```bash
-docker load < functional_data_database_container_image_v5.tar
+docker load < functional_data_database_container_image_v6.tar
 ```
 
 OR
 
 ```bash
-docker load --input functional_data_database_container_image_v5.tar
+docker load --input functional_data_database_container_image_v6.tar
 ```
 
 To start the database you can either `Docker` or `docker-compose`:
@@ -110,7 +110,7 @@ from phase3 import nda, func, utils
 The pre-built image of the access container, microns-phase3-nda-notebook, can be downloaded from the microns-explorer linked above and loaded as a docker image the same way as the database archive above instead of building it yourself.
 
 ```bash
-docker load --input functional_data_notebook_container_image_v5.tar
+docker load --input functional_data_notebook_container_image_v6.tar
 ```
 
 ## mysql-client
@@ -141,13 +141,13 @@ The links section of the notebook service in docker-compose.yml will also need t
 If you want to ingest/import the SQL file into an existing MySQL instance you must first directly download the SQL dump file, this can be done with:
 
 ```bash
-aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v5/functional_data_database_sql_dump_v5.sql . --no-sign-request
+aws s3 cp s3://bossdb-open-data/iarpa_microns/minnie/functional_data/two_photon_processed_data_and_metadata/database_v6/functional_data_database_sql_dump_v6.sql . --no-sign-request
 ```
 
 Then to ingest it into your existing database, you first must create an empty schema by the name of `microns_phase3_nda`, then run this command (the `--compress` flag is optional) after replacing `[your-custom-databse-ip]` and `[your-username]` with your own info:
 
 ```bash
-mysql --compress --max_allowed_packet=2147483648 -h[your-custom-database-ip] -u[your-username] -p microns_phase3_nda < functional_data_database_sql_dump_v5.sql
+mysql --compress --max_allowed_packet=2147483648 -h[your-custom-database-ip] -u[your-username] -p microns_phase3_nda < functional_data_database_sql_dump_v6.sql
 ```
 
 This should take several hours.
