@@ -73,14 +73,14 @@ The first accesses of the data may take awhile, but should be fast after that.
 
 ## Jupyter Notebook (DataJoint)
 
-You can clone this access repository and build it yourself with `Docker` and `docker-compose`.
-Clone the repository at https://github.com/cajal/microns_phase3_nda.
+You can use this access repository and build the notebook image yourself with `Docker` and `docker-compose`.
 
-Using the docker-compose you can start the service with:
+Using the docker-compose you can start the container with:
 
 ```bash
 docker-compose up -d notebook
 ```
+
 which can then be accessed at http://localhost:8888/tree (this uses the default port of 8888).
 
 http://localhost:8888 will send to Jupyter Lab, but the plots/graphics might not all work out-of-the-box without enabling jupyter lab extensions.
