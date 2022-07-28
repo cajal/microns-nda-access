@@ -41,17 +41,8 @@ RUN mkdir -p /scripts \
 
 RUN echo "#!/usr/bin/env bash \n\
 \n\
-jupyter lab "$@" --allow-root\n" \
+jupyter lab --ip='0.0.0.0' --port=8888 --allow-root --no-browser --ServerApp.token=''\n"\
 >> /scripts/run_jupyter.sh
-
-RUN echo "# Accept all incoming requests \n\
-c.NotebookApp.ip = '0.0.0.0' \n\
-c.NotebookApp.port = 8888 \n\
-c.NotebookApp.open_browser = False \n\
-c.MultiKernelManager.default_kernel_name = 'python3' \n\
-c.NotebookApp.token = '' \n\
-c.NotebookApp.password = ''\n" \
->> /root/.jupyter/jupyter_notebook_config.py
 
 RUN echo ".container { \n\
     width: 75% !important; \n\
