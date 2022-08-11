@@ -2,7 +2,7 @@ version: '3.1'
 
 services:
   notebook:
-    image: 21617_release_nda-nda-notebook:latest
+    image: 21617-release-nda-notebook:latest
     build:
       context: .
     env_file: .env
@@ -22,7 +22,7 @@ services:
       - 8888:8888
     
   database:
-    image: 21617_release_nda-nda-database:latest # This image should be first loaded from the downloaded tar file, reference SETUP.md for more information.
+    image: 21617-release-nda-database:latest # This image should be first loaded from the downloaded tar file, reference SETUP.md for more information.
     command: --default-authentication-plugin=mysql_native_password --max-allowed-packet=1073741824
     restart: always
     ports:
