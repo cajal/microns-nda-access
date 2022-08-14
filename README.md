@@ -104,7 +104,7 @@ import datajoint as dj
 
 dj.config['database.host'] = 'database'
 dj.config['database.user'] = 'root'
-df.config['database.password'] = 'microns123'
+dj.config['database.password'] = 'microns123'
 
 from phase3 import nda, func, utils
 ```
