@@ -28,3 +28,13 @@ services:
     ports:
       - 3306:3306
 #    network_mode: 'host'
+
+  notebook-only:
+    image: microns-phase3-nda-notebook:latest
+    build:
+      context: .
+    env_file: .env
+    volumes:
+      - ${EXTERNAL_NOTEBOOKS}:/notebooks/workspace
+    ports: 
+      - 8888:8888
